@@ -1,21 +1,24 @@
 <?php
 
+use yii\helpers\ArrayHelper;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
+$configLocal = require __DIR__ . '/web-local.php';
+
 $config = [
     'id' => 'basic',
+    'name' => 'TGStat тестовое задание',
+    'language' => 'ru',
+    'sourceLanguage' => 'ru',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
-        'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'jLf7B9mearMKhLQMAQHHW8y7RF47WIMk',
-        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
@@ -28,6 +31,7 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
+
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure transport
             // for the mailer to send real emails.
@@ -43,14 +47,19 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
+
+        'urlShortener' => [
+            'class' => 'app\components\UrlShortener',
+            'shortUrlHost' => 'https://short-url.tgstat.com'
+        ]
+
     ],
     'params' => $params,
 ];
@@ -72,4 +81,4 @@ if (YII_ENV_DEV) {
     ];
 }
 
-return $config;
+return ArrayHelper::merge($config, $configLocal);

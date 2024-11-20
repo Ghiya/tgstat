@@ -1,14 +1,15 @@
 <?php
 
-return [
+use yii\helpers\ArrayHelper;
+
+$dbLocal = require __DIR__.'/db-local.php';
+
+return ArrayHelper::merge([
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=weirdbirru_jobtest',
-    'username' => 'weridbirru',
-    'password' => 'BxD2FDZBCQF_8N5S',
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)
     //'enableSchemaCache' => true,
     //'schemaCacheDuration' => 60,
     //'schemaCache' => 'cache',
-];
+], $dbLocal);
